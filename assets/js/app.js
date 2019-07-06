@@ -1,5 +1,5 @@
 var svgWidth = 1000;
-var svgHeight = 500;
+var svgHeight = 650;
 
 var margin = {
   top: 20,
@@ -68,51 +68,50 @@ d3.csv("assets/data/data.csv")
     .attr("opacity", ".5")
     .attr("class","stateCircle");
 
-    chartGroup.selectAll("text")
+    chartGroup.selectAll(".label")
     .data(healthData)
     .enter()
     .append("text",d=>d.abbr)
     .attr("x",d=>xLinearScale(d.age))
     .attr("y",d=>yLinearScale(d.poverty)+5)
-    .attr("class","stateText")
+    .attr("class","label stateText")
     .text(d=>d.abbr)
 
     
-   
-    // //6: Initialize tool tip
-    // 
-    // var toolTip = d3.tip()
-    //   .attr("class", "d3-tip")
-    //   .offset([80, -60])
-    //   .html(function(d) {
-    //     return (`${d.state}<br>Poverty (%): ${d.poverty}<br>Age (Median): ${d.age}`);
-    //   });
+    //6: Initialize tool tip
+    
+    var toolTip = d3.tip()
+      .attr("class", "d3-tip")
+      .offset([80, -60])
+      .html(function(d) {
+        return (`${d.state}<br>Poverty (%): ${d.poverty}<br>Age (Median): ${d.age}`);
+      });
 
-    // //7: Create tooltip in the chart
-    // 
-    // chartGroup.call(toolTip);
+    //7: Create tooltip in the chart
+    
+    chartGroup.call(toolTip);
 
-    // //8: Create event listeners to display and hide the tooltip
-    // 
-    // circlesGroup.on("click", function(data) {
-    //   toolTip.show(data, this);
-    // })
-    //   // onmouseout event
-    //   .on("mouseout", function(data, index) {
-    //     toolTip.hide(data);
-    //   });
+    //8: Create event listeners to display and hide the tooltip
+    
+    circlesGroup.on("click", function(data) {
+      toolTip.show(data, this);
+    })
+      // onmouseout event
+      .on("mouseout", function(data, index) {
+        toolTip.hide(data);
+      });
 
-    // // Create axes labels
-    // chartGroup.append("text")
-    //   .attr("transform", "rotate(-90)")
-    //   .attr("y", 0 - margin.left + 40)
-    //   .attr("x", 0 - (height / 2))
-    //   .attr("dy", "1em")
-    //   .attr("class", "axisText")
-    //   .text("Poverty (%)");
+    // Create axes labels
+    chartGroup.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left + 40)
+      .attr("x", 0 - (height / 2))
+      .attr("dy", "1em")
+      .attr("class", "axisText")
+      .text("Poverty (%)");
 
-    // chartGroup.append("text")
-    //   .attr("transform", `translate(${width / 2}, ${height + margin.top + 30})`)
-    //   .attr("class", "axisText")
-    //   .text("Age (Median)");
+    chartGroup.append("text")
+      .attr("transform", `translate(${width / 2}, ${height + margin.top + 30})`)
+      .attr("class", "axisText")
+      .text("Age (Median)");
   });
