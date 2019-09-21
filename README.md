@@ -1,3 +1,3 @@
 # D3 Project
 
-<img src="Images/animation.gif" width="350">
+<img src="Images/animation.gif" width="550">
