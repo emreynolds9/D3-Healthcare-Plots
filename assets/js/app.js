@@ -1,11 +1,11 @@
-var svgWidth = 1000;
-var svgHeight = 600;
+var svgWidth = 1100;
+var svgHeight = 700;
 
 var margin = {
   top: 20,
-  right: 40,
+  right: 20,
   bottom: 80,
-  left: 80,
+  left: 70,
 };
 
 var width = svgWidth - margin.left - margin.right;
@@ -25,14 +25,15 @@ var chartGroup = svg.append("g")
 // Initial Params
 var chosenXAxis = "age";
 
+
 //UPDATE X-AXIS SCALE
 // function used for updating x-scale var upon click on axis label
 function xScale(healthData, chosenXAxis) {
   // create scales
+  var adjustment = (d3.min(healthData, d => d[chosenXAxis]))/30
   var xLinearScale = d3.scaleLinear()
-    .domain([d3.min(healthData, d => d[chosenXAxis])-1,
-      d3.max(healthData, d => d[chosenXAxis])+1
-    ])
+    .domain([d3.min(healthData, d => d[chosenXAxis])-adjustment,
+      d3.max(healthData, d => d[chosenXAxis])+1])
     .range([0, width]);
 
   return xLinearScale;
@@ -82,9 +83,9 @@ function updateToolTip(chosenXAxis, circlesGroup) {
 
   var toolTip = d3.tip()
     .attr("class", "d3-tip")
-    .offset([80, -60])
+    .offset([100, -60])
     .html(function(d) {
-      return (`${d.state}: <br>${label} ${d[chosenXAxis]} <br>Healthcare Coverage: ${d.coverage}`);
+      return (`${d.state}: <br>${label} ${d[chosenXAxis]} <br>Healthcare Coverage: ${d.coverage}%`);
     });
 
   circlesGroup.call(toolTip);
@@ -98,7 +99,7 @@ function updateToolTip(chosenXAxis, circlesGroup) {
 }
 
 // Retrieve data from the CSV file and execute everything below
-d3.csv("assets/data/data.csv")
+d3.csv("https://raw.githubusercontent.com/emreynolds9/D3-Healthcare-Plots/master/assets/data/data.csv")
   .then(function(healthData) {
   // if (err) throw err;
 
@@ -117,8 +118,8 @@ d3.csv("assets/data/data.csv")
 
   // Create y scale function
   var yLinearScale = d3.scaleLinear()
-    .domain([d3.min(healthData, d => d.coverage)-1, d3.max(healthData, d => d.coverage)])
-    .range([height, 0]);
+    .domain([d3.min(healthData, d => d.coverage)-2, d3.max(healthData, d => d.coverage)+2])
+    .range([height, d3.max(healthData, d => d.coverage)]);
 
   // Create initial axis functions
   var bottomAxis = d3.axisBottom(xLinearScale);
