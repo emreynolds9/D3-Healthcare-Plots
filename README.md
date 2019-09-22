@@ -1,4 +1,4 @@
-# D3 Project
+# Interactive Healthcare Plots
 
 This project is an interactive scatter plot visualization showing the relationships between age or income against healthcare coverage (%) for each state in the US. The interaction allows the user to quickly choose age or income and the scatter plot moves accordingly. 
 
