@@ -85,7 +85,7 @@ function updateToolTip(chosenXAxis, circlesGroup) {
     .attr("class", "d3-tip")
     .offset([100, -60])
     .html(function(d) {
-      return (`${d.state}: <br>${label} ${d[chosenXAxis]} <br>Healthcare Coverage: ${d.coverage}%`);
+      return (`${d.state}: <br>${label} ${d[chosenXAxis].toLocaleString()} <br>Healthcare Coverage: ${d.coverage}%`);
     });
 
   circlesGroup.call(toolTip);
